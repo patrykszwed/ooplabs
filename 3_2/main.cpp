@@ -14,7 +14,7 @@ public:
 
     }
 
-    // Override + operator
+    // Overload + operator
     Complex operator+(const Complex &second){
         Complex result;
 
@@ -24,7 +24,7 @@ public:
         return result;
     }
 
-    // Override - operator
+    // Overload - operator
     Complex operator-(const Complex &second){
         Complex result;
 
@@ -34,7 +34,7 @@ public:
         return result;
     }
 
-    // Override * operator
+    // Overload * operator
     Complex operator*(const Complex &second){
         Complex result;
 
@@ -44,7 +44,7 @@ public:
         return result;
     }
 
-    // Override / operator
+    // Overload / operator
     Complex operator/(const Complex &second){
         Complex result;
 
