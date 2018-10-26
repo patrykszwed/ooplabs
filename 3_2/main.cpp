@@ -48,6 +48,11 @@ public:
     Complex operator/(const Complex &second){
         Complex result;
 
+        if(second.getImaginary() == 0){
+            cout << "You cannot divide by 0! Closing the app.\n";
+            exit(1);
+        }
+
         double div = (second.getReal() * second.getReal()) + (second.getImaginary() * second.getImaginary());
         result.setReal((this->getReal() * second.getReal()) + (this->getImaginary() * second.getImaginary()));
         result.setReal(result.getReal() / div);
@@ -77,7 +82,7 @@ public:
 int main() {
 
     Complex first(15, 5);
-    Complex second(24, 18);
+    Complex second(24, 0);
 
     Complex result = first + second;
 

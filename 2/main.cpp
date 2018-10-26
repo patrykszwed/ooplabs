@@ -7,6 +7,8 @@ void getData(float [][4]);
 void printHeader();
 void printData(float [][4]);
 
+bool isValidFloat(string basic_string);
+
 int main() {
 
     float sales[5][4] = {0.0};
@@ -20,6 +22,25 @@ int main() {
     return 0;
 }
 
+bool isValidNumber(string string){
+    for(int i : string){
+        if(!isdigit(i))
+            return false;
+    }
+    return true;
+}
+
+bool isValidFloat(string string) {
+    bool isDot = false;
+    for(int i : string){
+        if((!isdigit(i) && i != '.') || (i == '.' && isDot))
+            return false;
+        else if(i == '.')
+            isDot = true;
+    }
+    return true;
+}
+
 void getData(float sales[][4]){
 
     int salesperson;
@@ -27,10 +48,37 @@ void getData(float sales[][4]){
     float value;
     string temp;
 
-    ifstream myFile("c:/users/patry/documents/oop/sales.txt");
+    ifstream myFile("c:/users/patry/documents/WUST/Semestr 3/oop/pwr/2/sales.txt");
 
     if(myFile.is_open()){
-        while(myFile >> salesperson >> product >> value){
+        while(!myFile.eof()){
+            myFile >> temp;
+
+            if(!isValidNumber(temp)){
+                cout << "Input from file is invalid! Closing the app.\n";
+                exit(1);
+            }
+
+            salesperson = stoi(temp);
+
+            myFile >> temp;
+
+            if(!isValidNumber(temp)){
+                cout << "Input from file is invalid! Closing the app.\n";
+                exit(1);
+            }
+
+            product = stoi(temp);
+
+            myFile >> temp;
+
+            if(!isValidFloat(temp)){
+                cout << "Input from file is invalid! Closing the app.\n";
+                exit(1);
+            }
+
+            value = stof(temp);
+
             sales[salesperson - 1][product - 1] += value;
         }
     }
