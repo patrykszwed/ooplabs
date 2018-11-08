@@ -10,21 +10,14 @@ private:
     string fuel;
 
 public:
-    bool isDiesel(){
-        return (this->getFuel() == "Diesel" || this->getFuel() == "diesel");
+    Vehicle(int productionYear, float mileage, string brand, string fuel){
+        this->setProductionYear(productionYear);
+        this->setMileage(mileage);
+        this->setBrand(brand);
+        this->setFuel(fuel);
     }
 
-    float calculateLitres(float x){
-        return (x * this->getMileage()) / 100;
-    }
-
-    bool isAntique(){
-        return (2018 - this->getProductionYear() >= 25);
-    }
-
-    bool hasIndicator(){
-        return bool(this->getBrand() != "BMW" || this->getBrand() != "bmw");
-    }
+    Vehicle() {}
 
     void toString(){
         cout << " productionYear = " << this->getProductionYear() << " mileage = " << this->getMileage()
@@ -64,17 +57,32 @@ public:
     }
 };
 
-class Car: public Vehicle{
+class Car{
 private:
     int registrationYear;
 
 public:
+    Vehicle* vehicle;
+
     Car(int registrationYear, int productionYear, float mileage, string brand, string fuel){
         this->setRegistrationYear(registrationYear);
-        this->setProductionYear(productionYear);
-        this->setMileage(mileage);
-        this->setBrand(brand);
-        this->setFuel(fuel);
+         vehicle = new Vehicle(productionYear, mileage, brand, fuel);
+    }
+
+    bool isDiesel(){
+        return (vehicle->getFuel() == "Diesel" || vehicle->getFuel() == "diesel");
+    }
+
+    float calculateLitres(float x){
+        return (x * vehicle->getMileage()) / 100;
+    }
+
+    bool isAntique(){
+        return (2018 - vehicle->getProductionYear() >= 25);
+    }
+
+    bool hasIndicator(){
+        return bool(vehicle->getBrand() != "BMW" || vehicle->getBrand() != "bmw");
     }
 
     int yearsSinceRegistration(){
@@ -88,19 +96,39 @@ public:
     void setRegistrationYear(int registrationYear) {
         Car::registrationYear = registrationYear;
     }
+
+    void toString(){
+        cout << "Some information about this car:\n registrationYear = " << this->getRegistrationYear();
+        vehicle->toString();
+    }
 };
 
-class Bus: public Vehicle{
+class Bus{
 private:
     int numberOfSeats;
 
 public:
+    Vehicle* vehicle;
+
     Bus(int numberOfSeats, int productionYear, float mileage, string brand, string fuel){
         this->setNumberOfSeats(numberOfSeats);
-        this->setProductionYear(productionYear);
-        this->setMileage(mileage);
-        this->setBrand(brand);
-        this->setFuel(fuel);
+        vehicle = new Vehicle(productionYear, mileage, brand, fuel);
+    }
+
+    bool isDiesel(){
+        return (vehicle->getFuel() == "Diesel" || vehicle->getFuel() == "diesel");
+    }
+
+    float calculateLitres(float x){
+        return (x * vehicle->getMileage()) / 100;
+    }
+
+    bool isAntique(){
+        return (2018 - vehicle->getProductionYear() >= 25);
+    }
+
+    bool hasIndicator(){
+        return bool(vehicle->getBrand() != "BMW" || vehicle->getBrand() != "bmw");
     }
 
     bool isEnoughSeats(int x){
@@ -113,6 +141,11 @@ public:
 
     void setNumberOfSeats(int numberOfSeats) {
         Bus::numberOfSeats = numberOfSeats;
+    }
+
+    void toString(){
+        cout << "Some information about this bus:\n numberOfSeats = " << this->getNumberOfSeats();
+        vehicle->toString();
     }
 };
 
@@ -157,7 +190,6 @@ int main() {
 
             Car car(registrationYear, productionYear, mileage, brand, fuel);
 
-            cout << "Some information about this car:\n registrationYear = " << car.getRegistrationYear();
             car.toString();
 
             cout << "Does it have an indicator? " << car.hasIndicator() << endl;
@@ -201,7 +233,6 @@ int main() {
 
             Bus bus(numberOfSeats, productionYear, mileage, brand, fuel);
 
-            cout << "Some information about this bus:\n numberOfSeats = " << bus.getNumberOfSeats();
             bus.toString();
 
             cout << "Does it have an indicator? " << bus.hasIndicator() << endl;
