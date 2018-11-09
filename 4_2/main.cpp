@@ -19,6 +19,22 @@ public:
 
     Vehicle() {}
 
+    bool isDiesel(){
+        return (this->getFuel() == "Diesel" || this->getFuel() == "diesel");
+    }
+
+    float calculateLitres(float x){
+        return (x * this->getMileage()) / 100;
+    }
+
+    bool isAntique(){
+        return (2018 - this->getProductionYear() >= 25);
+    }
+
+    bool hasIndicator(){
+        return bool(this->getBrand() != "BMW" && this->getBrand() != "bmw");
+    }
+
     void toString(){
         cout << " productionYear = " << this->getProductionYear() << " mileage = " << this->getMileage()
              << " brand = " << this->getBrand() << " fuel = " << this->getFuel() << endl;
@@ -66,23 +82,23 @@ public:
 
     Car(int registrationYear, int productionYear, float mileage, string brand, string fuel){
         this->setRegistrationYear(registrationYear);
-         vehicle = new Vehicle(productionYear, mileage, brand, fuel);
+        vehicle = new Vehicle(productionYear, mileage, brand, fuel);
     }
 
     bool isDiesel(){
-        return (vehicle->getFuel() == "Diesel" || vehicle->getFuel() == "diesel");
+        return vehicle->isDiesel();
     }
 
     float calculateLitres(float x){
-        return (x * vehicle->getMileage()) / 100;
+        return vehicle->calculateLitres(x);
     }
 
     bool isAntique(){
-        return (2018 - vehicle->getProductionYear() >= 25);
+        return vehicle->isAntique();
     }
 
     bool hasIndicator(){
-        return bool(vehicle->getBrand() != "BMW" || vehicle->getBrand() != "bmw");
+        return vehicle->hasIndicator();
     }
 
     int yearsSinceRegistration(){
@@ -116,19 +132,19 @@ public:
     }
 
     bool isDiesel(){
-        return (vehicle->getFuel() == "Diesel" || vehicle->getFuel() == "diesel");
+        return vehicle->isDiesel();
     }
 
     float calculateLitres(float x){
-        return (x * vehicle->getMileage()) / 100;
+        return vehicle->calculateLitres(x);
     }
 
     bool isAntique(){
-        return (2018 - vehicle->getProductionYear() >= 25);
+        return vehicle->isAntique();
     }
 
     bool hasIndicator(){
-        return bool(vehicle->getBrand() != "BMW" || vehicle->getBrand() != "bmw");
+        return vehicle->hasIndicator();
     }
 
     bool isEnoughSeats(int x){
