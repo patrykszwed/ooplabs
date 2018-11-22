@@ -127,38 +127,40 @@ int main() {
          << "If you want to check if that is an antique choose 4\n"
          << "If you want to exit, type whatever.\n";
 
-    if(!(cin >> choice)){
+    if (!(cin >> choice)) {
         cout << "\t\t\t Bad input! \t\t\t\nExiting the program!";
         return 0;
     }
 
-    switch(choice){
-        case 1:{
+    switch (choice) {
+        case 1: {
             cout << "Is amphibious high? " << amphibious.isAmphibiousHigh();
-        }break;
-        case 2:{
+        }
+            break;
+        case 2: {
             cout << "How many seats do you need?";
-            if(!(cin >> seats)){
+            if (!(cin >> seats)) {
                 cout << "\t\t\t Bad input! \t\t\t\nExiting the program!";
                 return 0;
             }
             cout << "Is there enough space? " << amphibious.isEnoughSeats(seats) << endl;
-        }break;
-        case 3:{
+        }
+            break;
+        case 3: {
             cout << "How many kilometers do you want to travel?";
-            if(!(cin >> km)){
+            if (!(cin >> km)) {
                 cout << "\t\t\t Bad input! \t\t\t\nExiting the program!";
                 return 0;
             }
             cout << "You will need " << amphibious.calculateLitres(km) << " litres of fuel.\n";
-        }break;
-        case 4:{
+        }
+            break;
+        case 4: {
             cout << "Is amphibious an antique? " << amphibious.isAntique() << endl;
-        }break;
+        }
+            break;
         default:
             cout << "You decided to exit.";
             break;
     }
-
-    return 0;
 }

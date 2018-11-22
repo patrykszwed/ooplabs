@@ -2,8 +2,6 @@
 
 using namespace std;
 
-class Amphibious;
-
 class Vehicle{
 private:
     float weight;
@@ -99,7 +97,7 @@ public:
 
     Amphibious(float weight, int maxSpeed, int productionYear, float mileage, int numberOfSeats, float heightOfAmphibious)
             : Car(weight, maxSpeed, productionYear, mileage),
-              Boat(weight, maxSpeed, productionYear, numberOfSeats),heightOfAmphibious(heightOfAmphibious) {}
+    Boat(weight, maxSpeed, productionYear, numberOfSeats),heightOfAmphibious(heightOfAmphibious) {}
 
 
     bool isAmphibiousHigh(){
@@ -156,7 +154,7 @@ int main() {
             //cout << "Is amphibious an antique? " << amphibious.isAntique() << endl;
             cout << "We cannot use functions from class Vehicle as"
                     " we have two copies of object and compiler"
-                    " doesn't know with which one it should work.\nSolution is making a virtual class.\n";
+                    " doesn't know with which one it should work.\nSolution is making use of a virtual class.\n";
         }break;
         default:
             cout << "You decided to exit.";
