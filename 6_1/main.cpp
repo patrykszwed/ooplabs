@@ -151,10 +151,7 @@ int main() {
             cout << "You will need " << amphibious.calculateLitres(km) << " litres of fuel.\n";
         }break;
         case 4:{
-            //cout << "Is amphibious an antique? " << amphibious.isAntique() << endl;
-            cout << "We cannot use functions from class Vehicle as"
-                    " we have two copies of object and compiler"
-                    " doesn't know with which one it should work.\nSolution is making use of a virtual class.\n";
+            cout << "Is amphibious an antique? " << amphibious.Car::isAntique() << endl;
         }break;
         default:
             cout << "You decided to exit.";

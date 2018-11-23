@@ -7,7 +7,9 @@ private:
     string color;
 
 public:
-    Thing(const string &color) : color(color) {}
+    Thing(const string &color) : color(color) {
+        cout << "Thing" << endl;
+    }
 
     void showColor(){
         cout << "Color = " << this->getColor() << endl;
@@ -31,7 +33,9 @@ private:
     int productionYear;
 
 public:
-    Machine(const string &color, int productionYear) : Thing(color), productionYear(productionYear) {}
+    Machine(const string &color, int productionYear) : Thing(color), productionYear(productionYear) {
+        cout << "Machine" << endl;
+    }
 
     void showMachine(){
         cout << "That is a machine.\n";
@@ -46,12 +50,14 @@ public:
     }
 };
 
-class Brake{
+class Brake : public Thing{
 private:
     float priceOfBrake;
 
 public:
-    Brake(float price) : priceOfBrake(price) {}
+    Brake(const string &color, float priceOfBrake) : Thing(color), priceOfBrake(priceOfBrake) {
+        cout << "Brake";
+    }
 
     float getPriceOfBrake() const {
         return priceOfBrake;
@@ -62,18 +68,22 @@ public:
     }
 };
 
-class Car : public Machine, public Brake{
+class Car : public Machine{
 public:
-    Car(const string &color, int productionYear, float price) : Machine(color, productionYear), Brake(price), Thing(color) {}
+    Car(const string &color, int productionYear) : Machine(color, productionYear), Thing(color) {
+        cout << "Car" << endl;
+    }
 
     void showCar(){
         cout << "That is a car.\n";
     }
 };
 
-class Bicycle : public Machine, public Brake{
+class Bicycle : public Machine{
 public:
-    Bicycle(const string &color, int productionYear, float price) : Machine(color, productionYear), Brake(price), Thing(color) {}
+    Bicycle(const string &color, int productionYear) : Machine(color, productionYear), Thing(color) {
+        cout << "Bicycle" << endl;
+    }
 
     void showBicycle(){
         cout << "That is a bicycle.\n";
@@ -85,12 +95,14 @@ public:
 int main() {
     int choice;
 
-    Bicycle bicycle("red", 2015, 1125);
-    Car car("black", 2018, 54000.50);
+    Bicycle bicycle("red", 2015);
+    Car car("black", 2018);
+    Brake brake("gray", 124.50);
 
-    cout << "If you want to display info about bicycle choose 1\n"
+    cout << "\nIf you want to display info about bicycle choose 1\n"
          << "If you want to display info about car choose 2\n"
-         << "If you want to exit, type whatever.\n";
+            << "If you want to display info about brake choose 3\n"
+            << "If you want to exit, type whatever.\n";
 
     if(!(cin >> choice)){
         cout << "\t\t\t Bad input! \t\t\t\nExiting the program!";
@@ -100,7 +112,6 @@ int main() {
     switch(choice){
         case 1:{
             cout << "productionYear = " << bicycle.getProductionYear() << endl;
-            cout << "priceOfBrake = " << bicycle.getPriceOfBrake() << endl;
             bicycle.showBicycle();
             bicycle.showMachine();
             bicycle.showColor();
@@ -108,11 +119,15 @@ int main() {
         }break;
         case 2:{
             cout << "productionYear = " << car.getProductionYear() << endl;
-            cout << "priceOfBrake = " << car.getPriceOfBrake() << endl;
             car.showCar();
             car.showMachine();
             car.showColor();
             car.showThing();
+        }break;
+        case 3:{
+            cout << "priceOfBrake = " << brake.getPriceOfBrake() << endl;
+            brake.showThing();
+            brake.showColor();
         }break;
         default:
             cout << "You decided to exit.";
