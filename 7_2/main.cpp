@@ -8,6 +8,7 @@ using namespace std;
 class Shape{
 public:
     virtual void drawShape() = 0;
+    virtual float calculateArea() = 0;
 };
 
 class Square : public Shape{
@@ -44,6 +45,10 @@ public:
             cout << "*";
         }
         cout << "\n";
+    }
+
+    float calculateArea(){
+        return this->getSide() * this->getSide();
     }
 
     float getSide() const {
@@ -86,6 +91,10 @@ public:
         cout << "\n";
     }
 
+    float calculateArea(){
+        return this->getHeight() * this->getWidth();
+    }
+
     float getWidth() const {
         return width;
     }
@@ -105,10 +114,10 @@ public:
 
 class Triangle : public Shape{
 private:
-    float height;
+    float height, width;
 
 public:
-    Triangle(float height) : height(height) {}
+    Triangle(float height, float width) : height(height), width(width) {}
 
     void drawShape(){
         for(int i = 1, k = 0; i <= this->getHeight(); ++i, k = 0)
@@ -125,6 +134,18 @@ public:
             }
             cout << endl;
         }
+    }
+
+    float calculateArea(){
+        return float(this->getWidth() * this->getHeight() * 0.5);
+    }
+
+    float getWidth() const {
+        return width;
+    }
+
+    void setWidth(float width) {
+        Triangle::width = width;
     }
 
     float getHeight() const {
@@ -162,6 +183,10 @@ public:
             }
             cout << endl;
         }
+    }
+
+    float calculateArea(){
+        return float(this->getRadius() * this->getRadius() * M_PI);
     }
 
     int getRadius() const {
@@ -220,6 +245,7 @@ int main() {
             height = stof(heightString);
             Square square(height);
             square.drawShape();
+            cout << "Area = " << square.calculateArea() << endl;
         }break;
         case 2:{
             cout << "Provide a height of this figure.\n";
@@ -242,6 +268,7 @@ int main() {
             width = stof(widthString);
             Rectangle rectangle(width, height);
             rectangle.drawShape();
+            cout << "Area = " << rectangle.calculateArea() << endl;
         }break;
         case 3:{
             cout << "Provide a height of this triangle.\n";
@@ -252,9 +279,19 @@ int main() {
                     cin >> heightString;
                 }
             }
+            cout << "Provide a width of this triangle.\n";
+            cin >> widthString;
+            if(!(isValid(widthString))){
+                while(!isValid(widthString)){
+                    cout << "Provide a valid number!\n";
+                    cin >> widthString;
+                }
+            }
             height = stof(heightString);
-            Triangle triangle(height);
+            width = stof(widthString);
+            Triangle triangle(height, width);
             triangle.drawShape();
+            cout << "Area = " << triangle.calculateArea() << endl;
         }break;
         case 4:{
             cout << "Provide a radius of this circle.\n";
@@ -268,6 +305,7 @@ int main() {
             width = (int)stof(widthString);
             Circle circle(width);
             circle.drawShape();
+            cout << "Area = " << circle.calculateArea() << endl;
         }break;
         default:
             break;
