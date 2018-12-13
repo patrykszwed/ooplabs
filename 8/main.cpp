@@ -12,7 +12,6 @@ private:
 public:
     void push(T x){
         vector1.push_back(x);
-        //cout << "Push: " << x << endl;
     }
 
     void pop() {
@@ -24,7 +23,6 @@ public:
 
     T top(){
         if(vector1.empty()){
-            //cout << "Stack is empty\n";
             throw out_of_range("Stack is empty");
         }
         return vector1.back();
@@ -48,33 +46,32 @@ int main() {
         stackInt.push(1);
         stackString.push("!");
 
-        cout << "\t\t\t stackInt";
-        cout << "\nEmpty = " << stackInt.empty() << endl;
+        cout << "\n\t\t\t === stackInt ===\n";
+        cout << "\nEmpty(0 - false, 1 - true) = " << stackInt.empty() << endl;
         cout << "Top = " << stackInt.top();
         cout << "\nPop\n";
         stackInt.pop();
         cout << "Top = " << stackInt.top() << endl;
-        cout << "\nPop\n";
+        cout << "Pop\n";
         stackInt.pop();
         cout << "Top = " << stackInt.top() << endl;
-        cout << "\nPop\n";
+        cout << "Pop\n";
         stackInt.pop();
-        //cout << "Top = " << stackInt.top() << endl;
 
-        cout << "\t\t\t stackString";
-        cout << "\nEmpty = " << stackString.empty() << endl;
+        cout << "\n\t\t\t === stackString ===\n";
+        cout << "\nEmpty(0 - false, 1 - true) = " << stackString.empty() << endl;
         cout << "Top = " << stackString.top();
         cout << "\nPop\n";
         stackString.pop();
         cout << "Top = " << stackString.top() << endl;
-        cout << "\nPop\n";
+        cout << "Pop\n";
         stackString.pop();
         cout << "Top = " << stackString.top() << endl;
-        cout << "\nPop\n";
+        cout << "Pop\n";
         stackString.pop();
         cout << "Top = " << stackString.top() << endl;
     }catch(exception &exc){
-        cerr << "Exception: " << exc.what() << endl;
+        cerr << " Exception: " << exc.what() << endl;
         return -1;
     }
     return 0;

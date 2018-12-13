@@ -19,55 +19,74 @@ public:
     }
 
     void printPoints(){
-        for(int i = 0; i < vector.size(); ++i) {
-            cout << vector[i].first << " "
-                 << vector[i].second << endl;
+        cout << endl;
+        for(int i = 0; i < this->vector.size(); ++i) {
+            cout << this->vector[i].first << " "
+                 << this->vector[i].second << endl;
         }
+    }
+
+    bool static cmpfunc(const pair<T, T> &a, const pair<T, T> &b){  // comparison function
+        if(a.first < b.first)   // check first values
+            return true;
+        else if(a.first > b.first)
+            return false;
+        else                    // if they are equal, then check with respect to second values
+            return a.second < b.second;
     }
 
     const std::vector <pair<T, T>> &getVector() const {
         return vector;
     }
 
-    T cmpfunc()
+    void setVector(const std::vector <pair<T, T>> &vector) {
+        Points::vector = vector;
+    }
 };
 
-
 template <typename T>
-void sortPoints(Points<T> points){
-
+void sortPoints(Points<T> &points){ // through reference as we assign new vector to variable points
     vector< pair <T, T> > vector = points.getVector();
 
-    for(int i = 0; i < vector.size(); ++i){
+    sort(vector.begin(), vector.end(), points.cmpfunc);
 
-        // DEBUG
-        /*cout << vector[i].first << " "
-             << vector[i].second << endl;
-             */
-
-        // nie ma qsort() dla vectorow chyba
-        sort(vector.begin(), vector.end(), cmpfunc());
-    }
+    points.setVector(vector);
 }
 
-/*template <typename T>
-void printSortedPoints(Points<T> points){
-    cout << points.getVector().
-}*/
-
 int main() {
+    // integer points
     Points<int> points1;
     points1.setCoords(5, 3);
     points1.setCoords(17, 10);
+    points1.setCoords(17, -3);
     points1.setCoords(-1, 31);
     points1.setCoords(18, 20);
+    points1.setCoords(18, 47);
     points1.setCoords(0, 0);
+    points1.setCoords(31, -15);
 
+    cout << "\n\t\t\t== Unsorted points ==" << endl;
     points1.printPoints();
-    cout << "\n";
+
     sortPoints(points1);
-    cout << endl;
+
+    cout << "\t\t\t== Sorted points ==" << endl;
     points1.printPoints();
+
+    // floating points
+    Points<float> points2;
+    points2.setCoords(1.2, 4.15);
+    points2.setCoords(-0.5, 21.3);
+    points2.setCoords(-0.5, 7.8);
+    points2.setCoords(12, -5);
+
+    cout << "\n\t\t\t== Unsorted points ==" << endl;
+    points2.printPoints();
+
+    sortPoints(points2);
+
+    cout << "\t\t\t== Sorted points ==" << endl;
+    points2.printPoints();
 
     return 0;
 }
