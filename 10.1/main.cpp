@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <map>
 
 using namespace std;
 
@@ -33,65 +34,104 @@ public:
     }
 };
 
-
 bool isOperator(const string &input) {
-    string operators[] = {"-", "+", "*", "/"};
-
-    for(int i = 0; i < 4; ++i)
-        if(input == operators[i])
-            return true;
+    if(input == "+" || input == "-" || input == "*" || input == "/")
+        return true;
 
     return false;
 }
 
-template <typename T>
-void performOperation(const string &input, Stack<T> &stack) {
-    T leftValue, rightValue, result;
+double performOperations(vector<string> input) {
 
-    // load values
-    rightValue = stack.top();
-    stack.pop();
-    leftValue = stack.top();
-    stack.pop();
+    double value1, value2;
+    Stack<double> values;
 
-    if(input == "-")
-        result = leftValue - rightValue;
-    else if(input == "+")
-        result = leftValue + rightValue;
-    else if(input == "*")
-        result = leftValue * rightValue;
-    else if(input == "/")
-        result = leftValue / rightValue;
+    for(string i : input) {
+        if(isdigit(i[0])){
+            values.push(stod(i));
+            continue;
+        }
 
-    cout << result << endl;
-    stack.push(result);
+        value1 = values.top();
+        values.pop();
+        value2 = values.top();
+        values.pop();
+
+        if (i == "-")
+            values.push(value2 - value1);
+        else if (i == "+")
+            values.push(value2 + value1);
+        else if (i == "*")
+            values.push(value2 * value1);
+        else if (i == "/")
+            values.push(value2 / value1);
+    }
+
+    return values.top();
+}
+
+int operatorPrecedence(const string &input) {
+    if (input == "(")
+        return 0;
+    if (input == "-" || input == "+" || input == ")")
+        return 1;
+    return 2;
+}
+
+vector<string> normalToRpn(vector<string> input) {
+    ::vector<string> outputVector;
+    Stack<string> operatorStack;
+    string temp;
+
+    for (string i : input) {
+        if (isdigit(i[0]))
+            outputVector.push_back(i);
+        else if (isOperator(i)) { // tutaj przerob
+            if (operatorStack.empty() || operatorPrecedence(i) > operatorPrecedence(operatorStack.top())){
+                operatorStack.push(i);
+            } else {
+                while (!operatorStack.empty() && operatorPrecedence(operatorStack.top()) >= operatorPrecedence(i)){
+                    outputVector.push_back(operatorStack.top());
+                    operatorStack.pop();
+                }
+                operatorStack.push(i);
+            }
+        }
+        else if (i == "(")
+            operatorStack.push(i);
+        else if (i == ")"){
+            while(operatorStack.top() != "("){
+                outputVector.push_back(operatorStack.top());
+                operatorStack.pop();
+            }
+            operatorStack.pop();
+        }
+    }
+    while(!operatorStack.empty()){
+        outputVector.push_back(operatorStack.top());
+        operatorStack.pop();
+    }
+
+    return outputVector;
 }
 
 int main() {
 
-    Stack<double> stack;
-    string input;
+    // todo add validation
+    string input, output, temp;
+    getline(cin, input);
+    istringstream istringstream1(input);
 
-    cout << "To exit calculator just type 'exit'\n";
+    vector<string> tempVector;
 
-    while(true){
-        double num;
+    while(istringstream1 >> temp)
+        tempVector.push_back(temp);
 
-        cin >> input;
+    vector<string> rpn = normalToRpn(tempVector);
+    for(const string &i : rpn)
+        cout << i;
 
-        if(input == "exit")
-            break;
-
-        // if numeric value
-        if(istringstream(input) >> num){
-            stack.push(num);
-        }
-        // if operator
-        else if(isOperator(input))
-            performOperation(input, stack);
-        else
-            cout << "Invalid input!\n";
-    }
+    cout << "\nResult is = " << performOperations(rpn);
 
     return 0;
 }
