@@ -34,6 +34,14 @@ public:
     }
 };
 
+int operatorPrecedence(const string &input) {
+    if (input == "(")
+        return 0;
+    if (input == "-" || input == "+" || input == ")")
+        return 1;
+    return 2;
+}
+
 bool isOperator(const string &input) {
     if(input == "+" || input == "-" || input == "*" || input == "/")
         return true;
@@ -70,14 +78,6 @@ double performOperations(vector<string> input) {
     return values.top();
 }
 
-int operatorPrecedence(const string &input) {
-    if (input == "(")
-        return 0;
-    if (input == "-" || input == "+" || input == ")")
-        return 1;
-    return 2;
-}
-
 vector<string> normalToRpn(vector<string> input) {
     ::vector<string> outputVector;
     Stack<string> operatorStack;
@@ -86,16 +86,12 @@ vector<string> normalToRpn(vector<string> input) {
     for (string i : input) {
         if (isdigit(i[0]))
             outputVector.push_back(i);
-        else if (isOperator(i)) { // tutaj przerob
-            if (operatorStack.empty() || operatorPrecedence(i) > operatorPrecedence(operatorStack.top())){
-                operatorStack.push(i);
-            } else {
-                while (!operatorStack.empty() && operatorPrecedence(operatorStack.top()) >= operatorPrecedence(i)){
-                    outputVector.push_back(operatorStack.top());
-                    operatorStack.pop();
-                }
-                operatorStack.push(i);
+        else if (isOperator(i)) {
+            while (!operatorStack.empty() && operatorPrecedence(operatorStack.top()) >= operatorPrecedence(i)){
+                outputVector.push_back(operatorStack.top());
+                operatorStack.pop();
             }
+            operatorStack.push(i);
         }
         else if (i == "(")
             operatorStack.push(i);
@@ -117,7 +113,6 @@ vector<string> normalToRpn(vector<string> input) {
 
 int main() {
 
-    // todo add validation
     string input, output, temp;
     getline(cin, input);
     istringstream istringstream1(input);
